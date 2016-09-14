@@ -131,7 +131,6 @@ function createStream(ourGlob, negatives, opt) {
     stream.end();
   });
   globber.on('match', function(filename) {
-    console.log(filename);
     found = true;
 
     stream.write({
@@ -173,8 +172,6 @@ function getBasePath(ourGlob, opt) {
   } else {
     basePath = resolveGlob(parent, opt);
   }
-
-  console.log(basePath);
 
   return basePath + '/';
 }
