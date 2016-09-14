@@ -11,7 +11,6 @@ var isNegatedGlob = require('is-negated-glob');
 var globParent = require('glob-parent');
 var path = require('path');
 var extend = require('extend');
-var sepRe = (process.platform === 'win32' ? /[\/\\]/ : /\/+/);
 
 function globStream(globs, opt) {
   if (!opt) {
@@ -177,10 +176,7 @@ function getBasePath(ourGlob, opt) {
 
   console.log(basePath);
 
-  if (!sepRe.test(basePath.charAt(basePath.length - 1))) {
-    basePath += path.sep;
-  }
-  return basePath;
+  return basePath + '/';
 }
 
 module.exports = globStream;
