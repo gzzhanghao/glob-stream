@@ -132,12 +132,13 @@ function createStream(ourGlob, negatives, opt) {
     stream.end();
   });
   globber.on('match', function(filename) {
+    console.log(filename);
     found = true;
 
     stream.write({
       cwd: opt.cwd,
       base: basePath,
-      path: path.normalize(filename),
+      path: filename,
     });
   });
   return stream;
@@ -173,6 +174,8 @@ function getBasePath(ourGlob, opt) {
   } else {
     basePath = resolveGlob(parent, opt);
   }
+
+  console.log(basePath);
 
   if (!sepRe.test(basePath.charAt(basePath.length - 1))) {
     basePath += path.sep;

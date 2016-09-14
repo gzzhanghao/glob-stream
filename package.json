@@ -28,7 +28,7 @@
     "ordered-read-streams": "^0.3.0",
     "pumpify": "^1.3.5",
     "through2": "^0.6.0",
-    "to-absolute-glob": "^0.1.1",
+    "to-absolute-glob": "phated/to-absolute-glob",
     "unique-stream": "^2.0.2"
   },
   "devDependencies": {
