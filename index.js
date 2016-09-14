@@ -169,7 +169,7 @@ function getBasePath(ourGlob, opt) {
   var parent = globParent(ourGlob);
 
   if (parent === '/' && opt && opt.root) {
-    basePath = path.normalize(opt.root);
+    basePath = opt.root;
   } else {
     basePath = resolveGlob(parent, opt);
   }
