@@ -13,6 +13,102 @@ var path = require('path');
 var extend = require('extend');
 var sepRe = (process.platform === 'win32' ? /[\/\\]/ : /\/+/);
 
+
+var Readable = require('readable-stream').Readable;
+var inherits = require('util').inherits;
+
+function GlobStream(ourGlob, negatives, opt) {
+  if (!(this instanceof GlobStream)) {
+    return new GlobStream(override);
+  }
+
+  opt.objectMode = true;
+  opt.highWaterMark = 16;
+
+  this._reading = false;
+  this.destroyed = false;
+  Readable.call(this, opt);
+
+  var self = this;
+  var hwm = this._readableState.highWaterMark;
+
+  function resolveNegatives(negative) {
+    return resolveGlob(negative, opt);
+  }
+
+  var ourOpt = extend({}, opt);
+  delete ourOpt.root;
+
+  var ourNegatives = negatives.map(resolveNegatives);
+  ourOpt.ignore = ourNegatives;
+
+  // Extract base path from glob
+  var basePath = ourOpt.base || getBasePath(ourGlob, opt);
+
+  // Remove path relativity to make globs make sense
+  ourGlob = resolveGlob(ourGlob, opt);
+
+  var globber = new glob.Glob(ourGlob, ourOpt);
+  this._globber = globber;
+
+  var found = false;
+
+  globber.on('match', function(filepath) {
+    console.log(filepath);
+    self._globber.pause();
+    found = true;
+    var obj = {
+      cwd: opt.cwd,
+      base: basePath,
+      path: path.normalize(filepath),
+    };
+
+    if (self.destroyed) {
+      return; // TODO: destory globber
+    }
+    if (filepath === null) {
+      return self.push(null); // TODO: remove?
+    }
+    self._reading = false;
+    if (self.push(obj)) {
+      self._read(hwm);
+    }
+  });
+
+  globber.once('end', function() {
+    if (opt.allowEmpty !== true && !found && globIsSingular(globber)) {
+      stream.emit('error',
+        new Error('File not found with singular glob: ' + ourGlob));
+    }
+
+    self.destroy();
+  });
+}
+inherits(GlobStream, Readable);
+
+GlobStream.prototype._read = function(size) {
+  if (this._reading || this.destroyed) {
+    return;
+  }
+  this._reading = true;
+  this._globber.resume();
+};
+
+GlobStream.prototype.destroy = function(err) {
+  if (this.destroyed) {
+    return;
+  }
+  this.destroyed = true;
+
+  var self = this;
+  process.nextTick(function() {
+    if (err) {
+      self.emit('error', err);
+    }
+    self.emit('close');
+  });
+};
+
 function globStream(globs, opt) {
   if (!opt) {
     opt = {};
@@ -93,7 +189,7 @@ function globStream(globs, opt) {
       .filter(indexGreaterThan(positive.index))
       .map(toGlob)
       .concat(ignore);
-    return createStream(positive.glob, negativeGlobs, ourOpt);
+    return new GlobStream(positive.glob, negativeGlobs, ourOpt);
   }
 }
 
