@@ -37,7 +37,7 @@ describe('glob-stream', function() {
     stream.on('data', function(file) {
       should.exist(file);
       should.exist(file.path);
-      String(file.path).should.equal(dir + '/fixtures/whatsgoingon/hey/');
+      String(file.path).should.equal(dir + '/fixtures/whatsgoingon/hey');
       folderCount++;
     });
     stream.on('end', function() {

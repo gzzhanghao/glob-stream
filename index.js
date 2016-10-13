@@ -6,10 +6,9 @@ var unique = require('unique-stream');
 
 var glob = require('glob');
 var pumpify = require('pumpify');
-var resolveGlob = require('to-absolute-glob');
 var isNegatedGlob = require('is-negated-glob');
 var globParent = require('glob-parent');
-var path = require('path');
+var resolveGlob = require('to-absolute-glob');
 var extend = require('extend');
 
 function globStream(globs, opt) {
@@ -97,21 +96,14 @@ function globStream(globs, opt) {
 }
 
 function createStream(ourGlob, negatives, opt) {
-  function resolveNegatives(negative) {
-    return resolveGlob(negative, opt);
-  }
 
   var ourOpt = extend({}, opt);
-  delete ourOpt.root;
 
-  var ourNegatives = negatives.map(resolveNegatives);
-  ourOpt.ignore = ourNegatives;
+  ourOpt.ignore = negatives;
+  ourOpt.absolute = true;
 
   // Extract base path from glob
   var basePath = ourOpt.base || getBasePath(ourGlob, opt);
-
-  // Remove path relativity to make globs make sense
-  ourGlob = resolveGlob(ourGlob, opt);
 
   // Create globbing stuff
   var globber = new glob.Glob(ourGlob, ourOpt);
@@ -164,16 +156,7 @@ function globIsSingular(glob) {
 }
 
 function getBasePath(ourGlob, opt) {
-  var basePath;
-  var parent = globParent(ourGlob);
-
-  if (parent === '/' && opt && opt.root) {
-    basePath = opt.root;
-  } else {
-    basePath = resolveGlob(parent, opt);
-  }
-
-  return basePath + '/';
+  return resolveGlob(globParent(ourGlob) + '/', opt);
 }
 
 module.exports = globStream;
