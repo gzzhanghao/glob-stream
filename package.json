@@ -28,7 +28,7 @@
     "ordered-read-streams": "^0.3.0",
     "pumpify": "^1.3.5",
     "through2": "^0.6.0",
-    "to-absolute-glob": "jonschlinkert/to-absolute-glob#is-absolute",
+    "to-absolute-glob": "doowb/to-absolute-glob#windows-is-absolute",
     "unique-stream": "^2.0.2"
   },
   "devDependencies": {
