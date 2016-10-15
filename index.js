@@ -156,7 +156,7 @@ function globIsSingular(glob) {
 }
 
 function getBasePath(ourGlob, opt) {
-  return resolveGlob(globParent(ourGlob) + '/', opt);
+  return resolveGlob(globParent(ourGlob), opt);
 }
 
 module.exports = globStream;

@@ -22,7 +22,7 @@ describe('glob-stream', function() {
       should.exist(file.base);
       should.exist(file.cwd);
       String(file.cwd).should.equal(dir);
-      String(file.base).should.equal(dir + '/fixtures/');
+      String(file.base).should.equal(dir + '/fixtures');
       String(file.path).should.equal(dir + '/fixtures/whatsgoingon');
       done();
     });
@@ -58,14 +58,14 @@ describe('glob-stream', function() {
       should.exist(file.base);
       should.exist(file.cwd);
       String(file.cwd).should.equal(dir);
-      String(file.base).should.equal(dir + '/fixtures/');
+      String(file.base).should.equal(dir + '/fixtures');
       String(file.path).should.equal(dir + '/fixtures/test.coffee');
       done();
     });
   });
 
   it('should handle ( ) in directory paths', function(done) {
-    var cwd = dir + '/fixtures/has (parens)/';
+    var cwd = dir + '/fixtures/has (parens)';
     var stream = globStream('*.dmc', { cwd: cwd });
     should.exist(stream);
     stream.on('error', function(err) {
@@ -95,7 +95,7 @@ describe('glob-stream', function() {
       should.exist(file.base);
       should.exist(file.cwd);
       String(file.cwd).should.equal(dir);
-      String(file.base).should.equal(dir + '/fixtures/has (parens)/');
+      String(file.base).should.equal(dir + '/fixtures/has (parens)');
       String(file.path).should.equal(dir + '/fixtures/has (parens)/test.dmc');
       done();
     });
@@ -149,7 +149,7 @@ describe('glob-stream', function() {
   });
 
   it('should return a correctly ordered file name stream for two globs and specified base', function(done) {
-    var baseDir = dir + '/fixtures/';
+    var baseDir = dir + '/fixtures';
 
     var globArray = [
       './whatsgoingon/hey/isaidhey/whatsgoingon/test.txt',
@@ -170,7 +170,7 @@ describe('glob-stream', function() {
   });
 
   it('should return a correctly ordered file name stream for two globs and cwdbase', function(done) {
-    var baseDir = dir + '/fixtures/';
+    var baseDir = dir + '/fixtures';
 
     var globArray = [
       './whatsgoingon/hey/isaidhey/whatsgoingon/test.txt',
@@ -202,7 +202,7 @@ describe('glob-stream', function() {
       should.exist(file.base);
       should.exist(file.cwd);
       String(file.cwd).should.equal(dir);
-      String(file.base).should.equal(dir + '/fixtures/');
+      String(file.base).should.equal(dir + '/fixtures');
       String(file.path).should.equal(dir + '/fixtures/test.coffee');
       done();
     });
@@ -223,7 +223,7 @@ describe('glob-stream', function() {
       should.exist(file.base);
       should.exist(file.cwd);
       String(file.cwd).should.equal(dir);
-      String(file.base).should.equal(dir + '/fixtures/');
+      String(file.base).should.equal(dir + '/fixtures');
       String(file.path).should.equal(dir + '/fixtures/test.coffee');
       done();
     });
@@ -242,7 +242,7 @@ describe('glob-stream', function() {
       should.exist(file.base);
       should.exist(file.cwd);
       String(file.cwd).should.equal(dir);
-      String(file.base).should.equal(dir + '/fixtures/');
+      String(file.base).should.equal(dir + '/fixtures');
       String(file.path).should.equal(dir + '/fixtures/test.coffee');
       done();
     });
@@ -272,7 +272,7 @@ describe('glob-stream', function() {
       should.exist(file.base);
       should.exist(file.cwd);
       String(file.cwd).should.equal(dir);
-      String(file.base).should.equal(dir + '/fixtures/');
+      String(file.base).should.equal(dir + '/fixtures');
       String(file.path).should.equal(dir + '/fixtures/.swag');
       done();
     });
@@ -302,7 +302,7 @@ describe('glob-stream', function() {
       should.exist(file.base);
       should.exist(file.cwd);
       String(file.cwd).should.equal(dir);
-      String(file.base).should.equal(dir + '/fixtures/');
+      String(file.base).should.equal(dir + '/fixtures');
       String(file.path).should.equal(dir + '/fixtures/test.coffee');
       done();
     });
@@ -324,7 +324,7 @@ describe('glob-stream', function() {
       should.exist(file.base);
       should.exist(file.cwd);
       String(file.cwd).should.equal(process.cwd());
-      String(file.base).should.equal(dir + '/fixtures/');
+      String(file.base).should.equal(dir + '/fixtures');
       String(file.path).should.equal(dir + '/fixtures/test.coffee');
       done();
     });
@@ -382,7 +382,7 @@ describe('glob-stream', function() {
   });
 
   it('should return a correctly ordered file name stream for two globs and custom base', function(done) {
-      var baseDir = dir + '/fixtures/';
+      var baseDir = dir + '/fixtures';
 
       var globArray = [
         './whatsgoingon/hey/isaidhey/whatsgoingon/test.txt',
@@ -491,7 +491,7 @@ describe('glob-stream', function() {
       should.exist(file.base);
       should.exist(file.cwd);
       String(file.cwd).should.equal(dir);
-      String(file.base).should.equal(dir + '/fixtures/');
+      String(file.base).should.equal(dir + '/fixtures');
       String(file.path).should.equal(dir + '/fixtures/test.coffee');
       done();
     });
@@ -509,7 +509,7 @@ describe('glob-stream', function() {
       should.exist(file.base);
       should.exist(file.cwd);
       String(file.cwd).should.equal(dir);
-      String(file.base).should.equal(dir + '/fixtures/stuff/');
+      String(file.base).should.equal(dir + '/fixtures/stuff');
       String(file.path).should.equal(dir + '/fixtures/stuff/run.dmc');
       done();
     });
@@ -527,7 +527,7 @@ describe('glob-stream', function() {
       should.exist(file.base);
       should.exist(file.cwd);
       String(file.cwd).should.equal(dir);
-      String(file.base).should.equal(dir + '/fixtures/stuff/');
+      String(file.base).should.equal(dir + '/fixtures/stuff');
       String(file.path).should.equal(dir + '/fixtures/stuff/run.dmc');
       done();
     });
@@ -573,7 +573,7 @@ describe('glob-stream', function() {
       should.exist(file.base);
       should.exist(file.cwd);
       String(file.cwd).should.equal(dir);
-      String(file.base).should.equal(dir + '/fixtures/');
+      String(file.base).should.equal(dir + '/fixtures');
       String(file.path).should.equal(dir + '/fixtures/test.coffee');
       done();
     });
@@ -591,7 +591,7 @@ describe('glob-stream', function() {
       should.exist(file.base);
       should.exist(file.cwd);
       String(file.cwd).should.equal(dir);
-      String(file.base).should.equal(dir + '/fixtures/');
+      String(file.base).should.equal(dir + '/fixtures');
       String(file.path).should.equal(dir + '/fixtures/test.coffee');
       done();
     });
