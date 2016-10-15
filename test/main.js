@@ -78,7 +78,7 @@ describe('glob-stream', function() {
       should.exist(file.cwd);
       String(file.cwd).should.equal(cwd);
       String(file.base).should.equal(cwd);
-      String(file.path).should.equal(cwd + 'test.dmc');
+      String(file.path).should.equal(cwd + '/test.dmc');
       done();
     });
   });
